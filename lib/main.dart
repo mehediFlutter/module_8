@@ -26,10 +26,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  TextEditingController daysController = TextEditingController();
   TextEditingController deadlineController = TextEditingController();
   List<TaskManager> TaskManagers = [
-    TaskManager("title", "description", "5 Daus", false)
+    TaskManager("title", "description", "5 Days", false),
   ];
 
   @override
@@ -50,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         itemBuilder: (context, index) {
           String showTitle = TaskManagers[index].title;
           String showDescription = TaskManagers[index].description;
-          String showDeadline = TaskManagers[index].deadline;
+          String showDays = TaskManagers[index].deadline;
           return InkWell(
             onLongPress: () {
               showModalBottomSheet(
@@ -77,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: 5,
                       ),
-                      Text("Days Required: " + showDeadline),
+                      Text("Days Required: " + showDays),
                       SizedBox(
                         height: 20,
                       ),
@@ -134,11 +133,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 5),
                 TextField(
-                  controller: daysController,
+                  controller: deadlineController,
+                  maxLines: 2,
                   decoration: InputDecoration(
-                    hintText: "Days Required",
-                    border: OutlineInputBorder(),
-                  ),
+                      hintText: "Days Required",
+                      border: OutlineInputBorder(borderSide: BorderSide())),
                 ),
               ],
             ),
@@ -147,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressed: () {
                     if (titleController.text.trim().isNotEmpty &&
                         descriptionController.text.trim().isNotEmpty &&
-                        daysController.text.trim().isNotEmpty) {
+                        deadlineController.text.trim().isNotEmpty) {
                       TaskManagers.add(TaskManager(
                           titleController.text,
                           descriptionController.text,
@@ -158,8 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pop(context);
                       titleController.clear();
                       descriptionController.clear();
-                      daysController.clear();
-                      descriptionController.text.trim();
+                      deadlineController.clear();
                     }
                   },
                   child: Text("Save")),
